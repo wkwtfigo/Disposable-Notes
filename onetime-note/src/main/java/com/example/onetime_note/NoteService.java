@@ -2,8 +2,10 @@ package com.example.onetime_note;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -19,9 +21,13 @@ public class NoteService {
         note.setToken(token);
         note.setContent(content);
         note.setCreatedAt(LocalDateTime.now());
-        note.setExpireTime(LocalDateTime.now().plus(ttl));
+        note.setExpiredAt(LocalDateTime.now().plus(ttl));
         noteRepository.save(note);
         return token;
+    }
+
+    public List<Note> getAllNotesSortedByDate() {
+        return noteRepository.findAll(Sort.by(Sort.Order.desc("createdAt")));
     }
 
     public String readNote(String token) {
