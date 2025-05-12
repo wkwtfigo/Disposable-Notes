@@ -39,7 +39,6 @@ public class NoteService {
         }
 
         String content = note.getContent();
-        noteRepository.delete(note);
         return content;
     }
 

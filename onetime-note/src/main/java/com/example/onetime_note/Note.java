@@ -38,6 +38,8 @@ public class Note {
         return expiredAt == null || createdAt == null || expiredAt.isAfter(createdAt);
     }
 
+    private String topic;
+
     @PrePersist
     protected void onCreate() {
         if (createdAt == null) {
