@@ -32,13 +32,14 @@ public class NoteService {
 
     public String readNote(String token) {
         Note note = noteRepository.findByToken(token).orElseThrow(() -> new RuntimeException("Note was not found!"));
-        
+
         if (note.getExpiredAt().isBefore(LocalDateTime.now())) {
             noteRepository.delete(note);
             throw new RuntimeException("Note expired");
         }
 
         String content = note.getContent();
+        noteRepository.delete(note);
         return content;
     }
 
